@@ -1,0 +1,83 @@
+﻿<Window x:Class="SmartCalculator.UserInterface.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SmartCalculator.UserInterface"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <local:MainWindowViewModel/>
+    </Window.DataContext>
+    
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Name="MenuAbout" Header="_About" Click="MenuAbout_Click"/>
+        </Menu>
+        <Grid>
+            <Grid.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.25*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Column="0" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                
+                <TextBlock Grid.ColumnSpan="4" Grid.Row="0" Text="Algorithm Parameters"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Equation"/>
+                <ComboBox Grid.Row="1" Grid.Column="1" Margin="5" Name="InputEquation" SelectionChanged="InputEquation_SelectionChanged">
+                    <ComboBoxItem>Basic Equation</ComboBoxItem>
+                </ComboBox>
+
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="Mutation Rate"/>
+                <TextBox Grid.Row="1" Grid.Column="3" Margin="5" Name="InputMutationRate"/>
+
+                <TextBlock Grid.Row="2" Grid.Column="2" Text="Amp. Factor"/>
+                <TextBox Grid.Row="2" Grid.Column="3" Margin="5" Name="InputAmplificationFactor"/>
+                
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Crossover Rate"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Margin="5" Name="InputCrossoverRate"/>
+                
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Equation Value"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Margin="5" Name="InputTargetEquationValue" Text="0"/>
+
+                <Button Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Margin="40, 6" Name="RunAlgorithmButton" Click="RunAlgorithmButton_Click"> Run Algorithm </Button>
+            </Grid>
+            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical">
+                <TextBlock Margin="5" Text="Equation Builder"/>
+                <ItemsControl Name="EquationPanel">
+                    <!-- Dynamically updated -->
+                </ItemsControl>
+            </StackPanel>
+            <DockPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="5">
+                <TextBlock DockPanel.Dock="Top" Text="Output"/>
+                <TextBlock Name="SimulationResults"/>
+            </DockPanel>
+        </Grid>
+    </DockPanel>
+</Window>
