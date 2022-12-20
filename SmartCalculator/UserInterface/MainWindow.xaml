@@ -31,7 +31,7 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1.25*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Column="0" Grid.Row="0">
                 <Grid.ColumnDefinitions>
@@ -52,8 +52,7 @@
 
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Equation"/>
                 <ComboBox Grid.Row="1" Grid.Column="1" Margin="5" Name="InputEquation" SelectionChanged="InputEquation_SelectionChanged">
-                    <ComboBoxItem>Basic Equation</ComboBoxItem>
-                    <ComboBoxItem>Basic Equation 2</ComboBoxItem>
+                    <ComboBoxItem>Polynomial</ComboBoxItem>
                 </ComboBox>
 
                 <TextBlock Grid.Row="1" Grid.Column="2" Text="Generations"/>

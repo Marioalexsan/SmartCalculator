@@ -54,8 +54,7 @@ public partial class MainWindow : Window
 
         Control? control = InputEquation.SelectedIndex switch
         {
-            0 => new GenericEquationBuilder() { ViewModel = { Equation = ViewModel.Equation = new BasicEquation() } },
-            1 => new GenericEquationBuilder() { ViewModel = { Equation = ViewModel.Equation = new BasicEquation2() } },
+            0 => new GenericEquationBuilder() { ViewModel = { Equation = ViewModel.Equation = new PolynomialEquation() } },
             _ => null
         };
 
@@ -87,7 +86,7 @@ public partial class MainWindow : Window
 
             SimulationResults.Text = "Simulation results: " + Environment.NewLine;
 
-            SimulationResults.Text += string.Join(Environment.NewLine, output.Select(x => string.Join(" ", x.Select(y => string.Format("{0:F1}", y)))));
+            SimulationResults.Text += string.Join(Environment.NewLine, output.Select(x => string.Join(" ", x.Select(y => string.Format("{0:F2}", y)))));
         }
         else
         {

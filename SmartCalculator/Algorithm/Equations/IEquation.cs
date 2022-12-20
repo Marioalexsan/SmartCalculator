@@ -14,6 +14,8 @@ public interface IEquation
     public (double min, double max) GetDomain(int input);
 
     public double Solve(IEnumerable<double> inputs);
+
+    public string GetDisplay();
 }
 
 public static class EquationExtensions
