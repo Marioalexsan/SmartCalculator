@@ -45,6 +45,7 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
                 
                 <TextBlock Grid.ColumnSpan="4" Grid.Row="0" Text="Algorithm Parameters"/>
@@ -52,21 +53,25 @@
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Equation"/>
                 <ComboBox Grid.Row="1" Grid.Column="1" Margin="5" Name="InputEquation" SelectionChanged="InputEquation_SelectionChanged">
                     <ComboBoxItem>Basic Equation</ComboBoxItem>
+                    <ComboBoxItem>Basic Equation 2</ComboBoxItem>
                 </ComboBox>
 
-                <TextBlock Grid.Row="1" Grid.Column="2" Text="Mutation Rate"/>
-                <TextBox Grid.Row="1" Grid.Column="3" Margin="5" Name="InputMutationRate"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="Generations"/>
+                <TextBox Grid.Row="1" Grid.Column="3" Margin="5" Name="InputGenerations" Text="100"/>
 
                 <TextBlock Grid.Row="2" Grid.Column="2" Text="Amp. Factor"/>
-                <TextBox Grid.Row="2" Grid.Column="3" Margin="5" Name="InputAmplificationFactor"/>
+                <TextBox Grid.Row="2" Grid.Column="3" Margin="5" Name="InputAmplificationFactor" Text="0.8"/>
                 
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="Crossover Rate"/>
-                <TextBox Grid.Row="2" Grid.Column="1" Margin="5" Name="InputCrossoverRate"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Margin="5" Name="InputCrossoverRate" Text="0.9"/>
                 
                 <TextBlock Grid.Row="3" Grid.Column="0" Text="Equation Value"/>
                 <TextBox Grid.Row="3" Grid.Column="1" Margin="5" Name="InputTargetEquationValue" Text="0"/>
+                
+                <TextBlock Grid.Row="3" Grid.Column="2" Text="Population Size"/>
+                <TextBox Grid.Row="3" Grid.Column="3" Margin="5" Name="InputPopulationSize" Text="50"/>
 
-                <Button Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Margin="40, 6" Name="RunAlgorithmButton" Click="RunAlgorithmButton_Click"> Run Algorithm </Button>
+                <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Margin="40, 3" Name="RunAlgorithmButton" Click="RunAlgorithmButton_Click"> Run Algorithm </Button>
             </Grid>
             <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical">
                 <TextBlock Margin="5" Text="Equation Builder"/>

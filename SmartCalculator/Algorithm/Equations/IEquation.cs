@@ -15,3 +15,17 @@ public interface IEquation
 
     public double Solve(IEnumerable<double> inputs);
 }
+
+public static class EquationExtensions
+{
+    /// <summary>
+    /// Build an optimization function that gives values close to zero for solutions that give results close to desired one.
+    /// </summary>
+    public static Func<IEnumerable<double>, double> GetOptimizationFunction(this IEquation equation, double result)
+    {
+        return (values) =>
+        {
+            return Math.Abs(equation.Solve(values) - result);
+        };
+    }
+}

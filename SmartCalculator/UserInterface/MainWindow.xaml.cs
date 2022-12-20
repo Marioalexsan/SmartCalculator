@@ -1,4 +1,5 @@
-﻿using SmartCalculator.Algorithm.Equations;
+﻿using SmartCalculator.Algorithm;
+using SmartCalculator.Algorithm.Equations;
 using SmartCalculator.UserInterface;
 using System;
 using System.Collections.Generic;
@@ -54,6 +55,7 @@ public partial class MainWindow : Window
         Control? control = InputEquation.SelectedIndex switch
         {
             0 => new GenericEquationBuilder() { ViewModel = { Equation = ViewModel.Equation = new BasicEquation() } },
+            1 => new GenericEquationBuilder() { ViewModel = { Equation = ViewModel.Equation = new BasicEquation2() } },
             _ => null
         };
 
@@ -70,7 +72,22 @@ public partial class MainWindow : Window
     {
         if (ViewModel.Equation != null)
         {
+            // TODO proper value parsing / validation
+            DifferentialEvolutionData data = new()
+            {
+                AmplificationFactor = double.Parse(InputAmplificationFactor.Text),
+                CrossoverRate = double.Parse(InputCrossoverRate.Text),
+                Generations = int.Parse(InputGenerations.Text),
+                OptimizationFunction = ViewModel.Equation.GetOptimizationFunction(double.Parse(InputTargetEquationValue.Text)),
+                PopulationSize = int.Parse(InputPopulationSize.Text),
+                InputDomains = Enumerable.Range(0, ViewModel.Equation.InputCount).Select(x => ViewModel.Equation.GetDomain(x)).ToList()
+            };
 
+            var output = DifferentialEvolution.RunSolver(data);
+
+            SimulationResults.Text = "Simulation results: " + Environment.NewLine;
+
+            SimulationResults.Text += string.Join(Environment.NewLine, output.Select(x => string.Join(" ", x.Select(y => string.Format("{0:F1}", y)))));
         }
         else
         {
