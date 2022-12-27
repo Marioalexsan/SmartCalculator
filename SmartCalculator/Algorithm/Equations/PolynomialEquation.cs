@@ -24,18 +24,32 @@ public class PolynomialEquation : IEquation
             if (Coefficients[i] == 0)
                 continue;
 
-            builder.Append(Coefficients[i]);
-            builder.Append('*');
-            builder.Append("x^");
+            if (Math.Abs(Coefficients[i]) == 1)
+            {
+                builder.Append(Coefficients[i] == 1 ? "" : "-");
+            }
+            else
+            {
+                builder.Append(Coefficients[i]);
+            }
 
             int pow = Coefficients.Length - i - 1;
 
-            if (pow > 0)
+            if (pow != 0)
             {
-                builder.Append(pow);
+                if (Math.Abs(Coefficients[i]) != 1)
+                    builder.Append('*');
+
+                builder.Append('x');
+                
+                if (pow != 1)
+                {
+                    builder.Append('^');
+                    builder.Append(pow);
+                }
             }
 
-            if (i < Coefficients.Length - 1 && Coefficients[i] > 0)
+            if (i < Coefficients.Length - 1 && Coefficients[i + 1] > 0)
             {
                 builder.Append('+');
             }

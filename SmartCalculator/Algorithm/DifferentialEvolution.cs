@@ -48,7 +48,7 @@ public static class DifferentialEvolution
                 {
                     bool replace = j == certainIndex || random.NextDouble() < data.CrossoverRate;
 
-                    u[j] = replace ? a + data.AmplificationFactor * (b - c) : population[i][j];
+                    u[j] = replace ? population[a][j] + data.AmplificationFactor * (population[b][j] - population[c][j]) : population[i][j];
                 }
 
                 // Select step
@@ -69,7 +69,7 @@ public static class DifferentialEvolution
         return population.Zip(functionValues).OrderBy(x => x.Second).Select(x => x.First).ToList();
     }
 
-    private static (double a, double b, double c) SelectThree(int count, Random random)
+    private static (int a, int b, int c) SelectThree(int count, Random random)
     {
         int a, b, c = 0, tries = 50;
 

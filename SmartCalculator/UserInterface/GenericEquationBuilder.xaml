@@ -16,6 +16,7 @@
                 <Setter Property="VerticalAlignment" Value="Center"/>
             </Style>
         </StackPanel.Resources>
+        <TextBlock Name="EquationDisplay" Text="{Binding EquationDisplay}"></TextBlock>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>

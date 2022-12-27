@@ -24,7 +24,7 @@ public class InputDomain
     public string Max { get; set; } = "";
 }
 
-public class GenericEquationBuilderViewModel
+public class GenericEquationBuilderViewModel : INotifyPropertyChanged
 {
     private IEquation? _equation;
     public IEquation? Equation
@@ -48,10 +48,18 @@ public class GenericEquationBuilderViewModel
                     });
                 }
             }
+
+            NotifyChanged(null);
         }
     }
 
+    public string EquationDisplay => _equation?.GetDisplay() ?? "Unknown";
+
     public ObservableCollection<InputDomain> InputDomains { get; } = new();
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    public void NotifyChanged(string? name) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 }
 
 /// <summary>
