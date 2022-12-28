@@ -18,9 +18,14 @@ using System.Windows.Shapes;
 
 namespace SmartCalculator.UserInterface;
 
-public class MainWindowViewModel
+public class MainWindowViewModel : BaseViewModel
 {
-    public IEquation? Equation { get; set; }
+    private IEquation? _equation;
+    public IEquation? Equation
+    {
+        get => _equation;
+        set => Change(ref _equation, value);
+    }
 }
 
 /// <summary>
@@ -28,12 +33,11 @@ public class MainWindowViewModel
 /// </summary>
 public partial class MainWindow : Window
 {
-    public MainWindowViewModel ViewModel { get; }
+    public MainWindowViewModel ViewModel => (MainWindowViewModel)DataContext;
 
     public MainWindow()
     {
         InitializeComponent();
-        ViewModel = (MainWindowViewModel)DataContext;
     }
 
     private void MenuAbout_Click(object sender, RoutedEventArgs e)
@@ -52,45 +56,83 @@ public partial class MainWindow : Window
     {
         EquationPanel.Items.Clear();
 
-        Control? control = InputEquation.SelectedIndex switch
+        Control? control = null;
+
+        switch (InputEquation.SelectedIndex)
         {
-            0 => new GenericEquationBuilder() { ViewModel = { Equation = ViewModel.Equation = new PolynomialEquation() } },
-            _ => null
-        };
+            case 0:
+                var builder = new PolynomialEquationBuilder();
+                ViewModel.Equation = builder.ViewModel.Equation;
+                control = builder;
+                break;
+        }
 
         if (control != null)
             EquationPanel.Items.Add(control);
 
-        else
-        {
-            ViewModel.Equation = null;
-        }
+        else ViewModel.Equation = null;
     }
 
     private void RunAlgorithmButton_Click(object sender, RoutedEventArgs e)
     {
         if (ViewModel.Equation != null)
         {
+            double ampFactor = default;
+            double crossRate = default;
+            int gens = default;
+            double targetValue = default;
+            int popSize = default;
+
+            bool success = double.TryParse(InputAmplificationFactor.Text, out ampFactor)
+                && double.TryParse(InputCrossoverRate.Text, out crossRate)
+                && int.TryParse(InputGenerations.Text, out gens)
+                && double.TryParse(InputTargetEquationValue.Text, out targetValue)
+                && int.TryParse(InputPopulationSize.Text, out popSize);
+
+            if (!success)
+            {
+                MessageBox.Show("Invalid inputs!");
+                return;
+            }
+
             // TODO proper value parsing / validation
             DifferentialEvolutionData data = new()
             {
-                AmplificationFactor = double.Parse(InputAmplificationFactor.Text),
-                CrossoverRate = double.Parse(InputCrossoverRate.Text),
-                Generations = int.Parse(InputGenerations.Text),
-                OptimizationFunction = ViewModel.Equation.GetOptimizationFunction(double.Parse(InputTargetEquationValue.Text)),
-                PopulationSize = int.Parse(InputPopulationSize.Text),
+                AmplificationFactor = ampFactor,
+                CrossoverRate = crossRate,
+                Generations = gens,
+                OptimizationFunction = ViewModel.Equation.GetOptimizationFunction(targetValue),
+                PopulationSize = popSize,
                 InputDomains = Enumerable.Range(0, ViewModel.Equation.InputCount).Select(x => ViewModel.Equation.GetDomain(x)).ToList()
             };
 
             var output = DifferentialEvolution.RunSolver(data);
 
-            SimulationResults.Text = "Simulation results: " + Environment.NewLine;
+            var cleanOutput = new List<double[]>();
 
-            SimulationResults.Text += string.Join(Environment.NewLine, output.Select(x => string.Join(" ", x.Select(y => string.Format("{0:F2}", y)))));
+            foreach (var value in output)
+            {
+                if (cleanOutput.Any(x => x.Zip(value).All(pair => Math.Abs(pair.First - pair.Second) < 0.001)))
+                    continue;
+
+                cleanOutput.Add(value);
+            }
+
+            SimulationResults.Text = "Potential results: " + Environment.NewLine;
+
+            foreach (var solution in cleanOutput)
+            {
+                SimulationResults.Text += "[";
+                SimulationResults.Text += string.Join(", ", solution.Select(y => string.Format("{0:F4}", y)));
+                SimulationResults.Text += "]";
+                SimulationResults.Text += " - f(X) = ";
+                SimulationResults.Text += string.Format("{0:F4}", ViewModel.Equation.Solve(solution));
+                SimulationResults.Text += Environment.NewLine;
+            }
         }
         else
         {
-            SimulationResults.Text = "Please select an algorithm!";
+            MessageBox.Show("Please select an algorithm!");
         }
     }
 }

@@ -72,12 +72,21 @@
 
                 <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Margin="40, 3" Name="RunAlgorithmButton" Click="RunAlgorithmButton_Click"> Run Algorithm </Button>
             </Grid>
-            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical">
-                <TextBlock Margin="5" Text="Equation Builder"/>
-                <ItemsControl Name="EquationPanel">
+            <Grid Grid.Row="1" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="10*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Margin="5" Text="Equation Builder"/>
+                <ItemsControl Grid.Row="1" Name="EquationPanel">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Grid/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
                     <!-- Dynamically updated -->
                 </ItemsControl>
-            </StackPanel>
+            </Grid>
             <DockPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="5">
                 <TextBlock DockPanel.Dock="Top" Text="Output"/>
                 <TextBlock Name="SimulationResults"/>

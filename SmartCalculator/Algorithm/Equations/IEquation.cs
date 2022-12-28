@@ -15,7 +15,7 @@ public interface IEquation
 
     public double Solve(IEnumerable<double> inputs);
 
-    public string GetDisplay();
+    public string TextDisplay { get; }
 }
 
 public static class EquationExtensions
