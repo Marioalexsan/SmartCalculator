@@ -53,6 +53,11 @@
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Equation"/>
                 <ComboBox Grid.Row="1" Grid.Column="1" Margin="5" Name="InputEquation" SelectionChanged="InputEquation_SelectionChanged">
                     <ComboBoxItem>Polynomial</ComboBoxItem>
+                    <ComboBoxItem>Exponential</ComboBoxItem>
+                    <ComboBoxItem>Trigonometric</ComboBoxItem>
+                    <ComboBoxItem>Radical</ComboBoxItem>
+                    <ComboBoxItem>Logarithmic</ComboBoxItem>
+                    <ComboBoxItem>ComplexCase</ComboBoxItem>
                 </ComboBox>
 
                 <TextBlock Grid.Row="1" Grid.Column="2" Text="Generations"/>

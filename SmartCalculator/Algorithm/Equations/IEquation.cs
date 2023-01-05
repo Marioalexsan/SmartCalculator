@@ -27,7 +27,8 @@ public static class EquationExtensions
     {
         return (values) =>
         {
-            return Math.Abs(equation.Solve(values) - result);
+            var temp = equation.Solve(values);
+            return double.IsNaN(temp) ? double.MaxValue : Math.Abs(temp - result);
         };
     }
 }

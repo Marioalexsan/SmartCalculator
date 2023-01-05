@@ -39,7 +39,6 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
     }
-
     private void MenuAbout_Click(object sender, RoutedEventArgs e)
     {
         MessageBox.Show(string.Join(Environment.NewLine, new []
@@ -64,6 +63,35 @@ public partial class MainWindow : Window
                 var builder = new PolynomialEquationBuilder();
                 ViewModel.Equation = builder.ViewModel.Equation;
                 control = builder;
+                break;
+
+            case 1:
+                var builder_1 = new ExponentialEquationBuilder();
+                ViewModel.Equation = builder_1.ViewModel.Equation;
+                control = builder_1;
+                break;
+
+            case 2:
+                var builder_2 = new TrigonometricEquationBuilder();
+                ViewModel.Equation = builder_2.ViewModel.Equation;
+                control = builder_2;
+                break;
+
+            case 3:
+                var builder_3 = new RadicalEquationBuilder();
+                ViewModel.Equation = builder_3.ViewModel.Equation;
+                control = builder_3;
+                break;
+
+            case 4:
+                var builder_4 = new LogarithmicEquationBuilder();
+                ViewModel.Equation = builder_4.ViewModel.Equation;
+                control = builder_4;
+                break;
+            case 5:
+                var builder_5 = new ComplexCaseEquationBuilder();
+                ViewModel.Equation = builder_5.ViewModel.Equation;
+                control = builder_5;
                 break;
         }
 
