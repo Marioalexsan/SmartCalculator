@@ -18,7 +18,7 @@ namespace SmartCalculator.Algorithm.Equations
 
         public string TextDisplay
         {
-            get { return $"len({ValueA}*x + {ValueB}*tg(Pi/x))/{ValueC}*{ValueD}^({ValueE}*x+sqrt(e*x))"; }
+            get { return $"ln({ValueA}*x + {ValueB}*tg(Pi/x)) / ({ValueC}*{ValueD})^({ValueE}*x+sqrt(e*x))"; }
         }
 
         public (double min, double max) GetDomain(int input) => input switch
@@ -31,7 +31,7 @@ namespace SmartCalculator.Algorithm.Equations
         {
             double x = inputs.First();
 
-            return Math.Log(ValueA * x + ValueB * Math.Tan(Math.PI / x)) / Math.Pow((ValueC * ValueD), (ValueE * x + Math.Sqrt(Math.E * x)));
+            return Math.Log(ValueA * x + ValueB * Math.Tan(Math.PI / x)) / Math.Pow(ValueC * ValueD, ValueE * x + Math.Sqrt(Math.E * x));
         }
     }
 
